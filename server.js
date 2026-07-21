@@ -1,3 +1,6 @@
+import dotenv from "dotenv"
+dotenv.config();
+
 import express from "express"
 import { dbFunction } from "./db.js";
 
@@ -29,12 +32,12 @@ app.listen(3000, () => {
   console.log("Server is working");
 })
 
-// GamesService 
-// - member: db 
-// Get All Games 
+// GamesService
+// - member: db
+// Get All Games
 // Get Single Game By Id
-// Create Game 
-// Update Game 
-// Delete Game 
-// Get Moves of Game 
+// Create Game
+// Update Game
+// Delete Game
+// Get Moves of Game
 // Create Move of Game 

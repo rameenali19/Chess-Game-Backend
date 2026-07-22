@@ -6,6 +6,8 @@ export class Game {
     this.res = res;
   }
 
+
+  //creating a new game
   async createGame() {
     const game = await this.dataBase("games")
       .insert({
@@ -18,6 +20,7 @@ export class Game {
     this.res.send("Game Info Saved");
   }
 
+  //deleting a game by ID
   async deleteGame() {
     const game = await this.dataBase("games")
       .where({
@@ -25,5 +28,20 @@ export class Game {
       })
       .del();
     this.res.send("Game Deleted Successfully")
+  }
+
+  //get moves by ID
+  async getMoves() {
+    const move = await this.dataBase("moves")
+      .where({
+        game_id: this.req.params.gameid
+      })
+    this.res.json(move)
+  }
+
+  //get all games
+  async getAllGames() {
+    const game = await this.dataBase("moves")
+    this.res.json(game)
   }
 }

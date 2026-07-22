@@ -29,7 +29,7 @@ function handler(req, res) {
 app.post("/api/games", handler)
 
 app.listen(3000, () => {
-  console.log("Server is working");
+  console.log("Server is working!");
 })
 
 // GamesService

@@ -1,33 +1,28 @@
+//importing dotenv to get the sensitive information from .env file
 import dotenv from "dotenv"
 dotenv.config();
 
+//importing express
 import express from "express"
-import { dbFunction } from "./db.js";
 
+import { Game } from "./Service/Game.js";
+import dataBase from "./Knex.js";
+
+//returning server
 const app = express();
 
+//converting the JSON text to  JavaScript object
 app.use(express.json());
 
-function handler(req, res) {
+//API endpoints and handler functions calling the respective function from Game.js
 
-  console.log("Handler reached!");
+//creating a new game
+app.post("/games", async (req, res) => {
+  const game = new Game(dataBase, req, res);
+  await game.createGame();
+})
 
-  const {
-    game_id,
-    white_player,
-    black_player,
-    results
-  } = req.body;
-
-  dbFunction(game_id, white_player, black_player, results);
-
-  res.status(202).json({
-    message: "Game Saved"
-  });
-}
-
-app.post("/api/games", handler)
-
+//assigning port to the server
 app.listen(3000, () => {
   console.log("Server is working!");
 })

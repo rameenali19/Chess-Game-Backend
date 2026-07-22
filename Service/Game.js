@@ -9,11 +9,10 @@ export class Game {
   //creating a new game
   async createGame() {
     const {
-      current_turn, game_status, game_state, id
+      current_turn, game_status, game_state
     } = this.req.body
     const game = await this.dataBase("games")
       .insert({
-        id,
         current_turn,
         game_status,
         game_state
@@ -85,12 +84,11 @@ export class Game {
   //creating move of game
   async createMove() {
     const {
-      id, piece_color, piece_type, source, destination
+      piece_color, piece_type, source, destination
     } = this.req.body
     const game_id = this.req.params.gameid
     const game = await this.dataBase("moves")
       .insert({
-        id,
         piece_color,
         piece_type,
         source,

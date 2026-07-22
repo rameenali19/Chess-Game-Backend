@@ -22,6 +22,12 @@ app.post("/games", async (req, res) => {
   await game.createGame();
 })
 
+//deleting a game
+app.delete("/game/id", async (req, res) => {
+  const game = new Game(dataBase, req, res);
+  await game.deleteGame();
+})
+
 //assigning port to the server
 app.listen(3000, () => {
   console.log("Server is working!");
@@ -31,8 +37,8 @@ app.listen(3000, () => {
 // - member: db
 // Get All Games
 // Get Single Game By Id
-// Create Game
+// Create Game   (done)
 // Update Game
-// Delete Game
+// Delete Game   (done)
 // Get Moves of Game
 // Create Move of Game 

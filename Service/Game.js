@@ -18,4 +18,12 @@ export class Game {
     this.res.send("Game Info Saved");
   }
 
+  async deleteGame() {
+    const game = await this.dataBase("games")
+      .where({
+        id: this.req.body.id
+      })
+      .del();
+    this.res.send("Game Deleted Successfully")
+  }
 }

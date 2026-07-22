@@ -1,7 +1,7 @@
 export class Game {
 
-  constructor(dataBase, req, res) {
-    this.dataBase = dataBase;
+  constructor(database, req, res) {
+    this.database = database;
     this.req = req;
     this.res = res;
   }
@@ -11,7 +11,7 @@ export class Game {
     const {
       current_turn, game_status, game_state
     } = this.req.body
-    const game = await this.dataBase("games")
+    const game = await this.database("games")
       .insert({
         current_turn,
         game_status,
@@ -25,7 +25,7 @@ export class Game {
   //deleting a game by ID
   async deleteGame() {
     const id = this.req.params.id;
-    const game = await this.dataBase("games")
+    const game = await this.database("games")
       .where({
         id,
       })
@@ -38,7 +38,7 @@ export class Game {
   //get moves by ID
   async getMoves() {
     const game_id = this.req.params.gameid;
-    const move = await this.dataBase("moves")
+    const move = await this.database("moves")
       .where({
         game_id,
       })
@@ -47,14 +47,14 @@ export class Game {
 
   //get all games
   async getAllGames() {
-    const game = await this.dataBase("games")
+    const game = await this.database("games")
     return game
   }
 
   //get game by id
   async getGame() {
     const id = this.req.params.id
-    const game = await this.dataBase("games")
+    const game = await this.database("games")
       .where({
         id,
       })
@@ -67,7 +67,7 @@ export class Game {
       current_turn, game_state, game_status
     } = this.req.body
     const id = this.req.params.id
-    const game = await this.dataBase("games")
+    const game = await this.database("games")
       .where({
         id,
       })
@@ -87,7 +87,7 @@ export class Game {
       piece_color, piece_type, source, destination
     } = this.req.body
     const game_id = this.req.params.gameid
-    const game = await this.dataBase("moves")
+    const game = await this.database("moves")
       .insert({
         piece_color,
         piece_type,

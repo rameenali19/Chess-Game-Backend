@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 
 dotenv.config();
 
-const dataBase = knex({
+const database = knex({
   client: "pg",
   connection: {
     host: process.env.DB_HOST,

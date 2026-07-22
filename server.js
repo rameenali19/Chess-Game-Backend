@@ -6,7 +6,7 @@ dotenv.config();
 import express from "express"
 
 import { Game } from "./Service/Game.js";
-import dataBase from "./Knex.js";
+import database from "./Knex.js";
 
 //returning server
 const app = express();
@@ -18,49 +18,49 @@ app.use(express.json());
 
 //creating a new game
 app.post("/games", async (req, res) => {
-  const game = new Game(dataBase, req, res);
+  const game = new Game(database, req, res);
   const response = await game.createGame();
   res.json(response)
 })
 
 //deleting a game by id
 app.delete("/games/:id", async (req, res) => {
-  const game = new Game(dataBase, req, res);
+  const game = new Game(database, req, res);
   const response = await game.deleteGame();
   res.json(response)
 })
 
 //get moves of game by id
 app.get("/games/:gameid/moves", async (req, res) => {
-  const moves = new Game(dataBase, req, res);
+  const moves = new Game(database, req, res);
   const response = await moves.getMoves();
   res.json(response)
 })
 
 //get all games
 app.get("/games", async (req, res) => {
-  const game = new Game(dataBase, req, res);
+  const game = new Game(database, req, res);
   const response = await game.getAllGames();
   res.json(response)
 })
 
 //get game by id
 app.get("/games/:id", async (req, res) => {
-  const game = new Game(dataBase, req, res);
+  const game = new Game(database, req, res);
   const response = await game.getGame();
   res.json(response)
 })
 
 //updating game by id
 app.post("/games/:id", async (req, res) => {
-  const game = new Game(dataBase, req, res);
+  const game = new Game(database, req, res);
   const response = await game.updateGame();
   res.json(response)
 })
 
 //create move of game
 app.post("/games/:gameid/moves", async (req, res) => {
-  const move = new Game(dataBase, req, res);
+  const move = new Game(database, req, res);
   const response = await move.createMove();
   res.json(response)
 })

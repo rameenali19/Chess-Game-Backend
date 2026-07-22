@@ -40,16 +40,26 @@ app.get("/games", async (req, res) => {
   await game.getAllGames();
 })
 
+//get game by id
+app.get("/games/:id", async (req, res) => {
+  const game = new Game(dataBase, req, res);
+  await game.getGame();
+})
+
+//updating game by id
+app.post("/games/:id", async (req, res) => {
+  const game = new Game(dataBase, req, res);
+  await game.updateGame();
+})
+
+//create move of game
+app.post("/games/:gameid/moves", async (req, res) => {
+  const move = new Game(dataBase, req, res);
+  await move.createMove();
+})
+
 //assigning port to the server
 app.listen(3000, () => {
   console.log("Server is working!");
 })
 
-
-// Get All Games
-// Get Single Game By Id
-// Create Game   (done)
-// Update Game
-// Delete Game   (done)
-// Get Moves of Game  (done)
-// Create Move of Game 

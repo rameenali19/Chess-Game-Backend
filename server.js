@@ -19,43 +19,50 @@ app.use(express.json());
 //creating a new game
 app.post("/games", async (req, res) => {
   const game = new Game(dataBase, req, res);
-  await game.createGame();
+  const response = await game.createGame();
+  res.json(response)
 })
 
 //deleting a game by id
 app.delete("/games/:id", async (req, res) => {
   const game = new Game(dataBase, req, res);
-  await game.deleteGame();
+  const response = await game.deleteGame();
+  res.json(response)
 })
 
 //get moves of game by id
 app.get("/games/:gameid/moves", async (req, res) => {
   const moves = new Game(dataBase, req, res);
-  await moves.getMoves();
+  const response = await moves.getMoves();
+  res.json(response)
 })
 
 //get all games
 app.get("/games", async (req, res) => {
   const game = new Game(dataBase, req, res);
-  await game.getAllGames();
+  const response = await game.getAllGames();
+  res.json(response)
 })
 
 //get game by id
 app.get("/games/:id", async (req, res) => {
   const game = new Game(dataBase, req, res);
-  await game.getGame();
+  const response = await game.getGame();
+  res.json(response)
 })
 
 //updating game by id
 app.post("/games/:id", async (req, res) => {
   const game = new Game(dataBase, req, res);
-  await game.updateGame();
+  const response = await game.updateGame();
+  res.json(response)
 })
 
 //create move of game
 app.post("/games/:gameid/moves", async (req, res) => {
   const move = new Game(dataBase, req, res);
-  await move.createMove();
+  const response = await move.createMove();
+  res.json(response)
 })
 
 //assigning port to the server

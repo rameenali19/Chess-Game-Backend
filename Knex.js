@@ -14,4 +14,4 @@ const database = knex({
   }
 });
 
-export default dataBase;
+export default database;

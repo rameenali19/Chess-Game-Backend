@@ -1,4 +1,5 @@
 //importing dotenv to get the sensitive information from .env file
+import cors from "cors";
 import dotenv from "dotenv"
 dotenv.config();
 
@@ -13,6 +14,9 @@ const app = express();
 
 //converting the JSON text to  JavaScript object
 app.use(express.json());
+
+//cors
+app.use(cors());
 
 //API endpoints and handler functions calling the respective function from Game.js
 

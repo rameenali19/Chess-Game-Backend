@@ -18,9 +18,8 @@ export class Game {
         game_status: gameStatus,
         game_state: gameState
       })
-    return {
-      message: "Game Info Saved"
-    };
+      .returning("*")
+    return (game[0]);
   }
 
   //deleting a game by ID

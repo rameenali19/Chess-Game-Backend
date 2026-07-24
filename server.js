@@ -24,7 +24,7 @@ app.use(cors());
 app.post("/games", async (req, res) => {
   const game = new Game(database, req, res);
   const response = await game.createGame();
-  res.json(response)
+  res.json(response.id)
 })
 
 //deleting a game by id

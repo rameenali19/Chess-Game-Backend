@@ -8,14 +8,15 @@ export class Game {
 
   //creating a new game
   async createGame() {
+
     const {
-      current_turn, game_status, game_state
+      currentTurn, gameStatus, gameState
     } = this.req.body
     const game = await this.database("games")
       .insert({
-        current_turn,
-        game_status,
-        game_state
+        current_turn: currentTurn,
+        game_status: gameStatus,
+        game_state: gameState
       })
     return {
       message: "Game Info Saved"
@@ -27,7 +28,7 @@ export class Game {
     const id = this.req.params.id;
     const game = await this.database("games")
       .where({
-        id,
+        id: id
       })
       .del();
     return {
@@ -37,10 +38,10 @@ export class Game {
 
   //get moves by ID
   async getMoves() {
-    const game_id = this.req.params.gameid;
+    const gameId = this.req.params.gameid;
     const move = await this.database("moves")
       .where({
-        game_id,
+        game_id: gameId
       })
     return move
   }
@@ -56,7 +57,7 @@ export class Game {
     const id = this.req.params.id
     const game = await this.database("games")
       .where({
-        id,
+        id: id
       })
     return game
   }
@@ -64,7 +65,7 @@ export class Game {
   //update game by id
   async updateGame() {
     const {
-      current_turn, game_state, game_status
+      currentTurn, gameState, gameStatus
     } = this.req.body
     const id = this.req.params.id
     const game = await this.database("games")
@@ -72,9 +73,9 @@ export class Game {
         id,
       })
       .update({
-        current_turn,
-        game_state,
-        game_status
+        current_turn: currentTurn,
+        game_state: gameState,
+        game_status: gameStatus
       })
     return {
       message: "Game Updated Succesfully!"
@@ -84,16 +85,16 @@ export class Game {
   //creating move of game
   async createMove() {
     const {
-      piece_color, piece_type, source, destination
+      pieceColor, pieceType, source, destination
     } = this.req.body
-    const game_id = this.req.params.gameid
+    const gameId = this.req.params.gameid
     const game = await this.database("moves")
       .insert({
-        piece_color,
-        piece_type,
-        source,
-        destination,
-        game_id
+        piece_color: pieceColor,
+        piece_type: pieceType,
+        source: source,
+        destination: destination,
+        game_id: gameId
       })
     return {
       message: "moves added Succesfully!"

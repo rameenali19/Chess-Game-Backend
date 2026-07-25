@@ -49,6 +49,7 @@ export class Game {
   //get all games
   async getAllGames() {
     const game = await this.database("games")
+    .orderBy("id", "asc");
     return game
   }
 

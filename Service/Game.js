@@ -10,14 +10,15 @@ export class Game {
   async createGame() {
 
     const {
-      currentTurn, gameStatus, gameState, enPassant
+      currentTurn, gameStatus, gameState, enPassant, promotion
     } = this.req.body
     const game = await this.database("games")
       .insert({
         current_turn: currentTurn,
         game_status: gameStatus,
         game_state: gameState,
-        en_passant: enPassant
+        en_passant: enPassant,
+        promotion: promotion
       })
       .returning("*")
     return (game[0]);
@@ -72,7 +73,7 @@ export class Game {
   //update game by id
   async updateGame() {
     const {
-      currentTurn, gameState, gameStatus, enPassant
+      currentTurn, gameState, gameStatus, enPassant, promotion
     } = this.req.body
     const id = this.req.params.id
     const game = await this.database("games")
@@ -83,7 +84,8 @@ export class Game {
         current_turn: currentTurn,
         game_state: gameState,
         game_status: gameStatus,
-        en_passant: enPassant
+        en_passant: enPassant,
+        promotion: promotion
       })
     return {
       message: "Game Updated Succesfully!"

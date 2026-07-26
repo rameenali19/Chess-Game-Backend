@@ -49,7 +49,7 @@ export class Game {
   //get all games
   async getAllGames() {
     const game = await this.database("games")
-    .orderBy("id", "asc");
+      .orderBy("id", "asc");
     return game
   }
 
@@ -65,9 +65,7 @@ export class Game {
     game.game_status = game.game_status.map(e => e.map(m => {
       return m != "." ? JSON.parse(m) : "."
     }))
-    game.en_passant = game.en_passant
-      ? JSON.parse(game.en_passant)
-      : null
+
     return game
   }
 

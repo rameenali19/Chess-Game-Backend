@@ -62,7 +62,6 @@ export class Game {
         id: id
       })
       .first();
-
     game.game_status = game.game_status.map(e => e.map(m => {
       return m != "." ? JSON.parse(m) : "."
     }))

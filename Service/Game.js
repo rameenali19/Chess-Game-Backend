@@ -10,7 +10,7 @@ export class Game {
   async createGame() {
 
     const {
-      currentTurn, gameStatus, gameState, enPassant, promotion
+      currentTurn, gameStatus, gameState, enPassant, promotion, userColor
     } = this.req.body
     const game = await this.database("games")
       .insert({
@@ -18,7 +18,8 @@ export class Game {
         game_status: gameStatus,
         game_state: gameState,
         en_passant: enPassant,
-        promotion: promotion
+        promotion: promotion,
+        user_color: userColor
       })
       .returning("*")
     return (game[0]);

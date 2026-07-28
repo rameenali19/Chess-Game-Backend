@@ -50,7 +50,12 @@ export class Game {
 
   //get all games
   async getAllGames() {
+    const page = this.req.query.page
+    const limit = this.req.query.limit
+    const offset = (page - 1) * 10
     const game = await this.database("games")
+      .limit(limit)
+      .offset(offset)
       .orderBy("id", "asc");
     return game
   }

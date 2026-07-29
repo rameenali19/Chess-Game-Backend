@@ -10,16 +10,16 @@ export class Game {
   async createGame() {
 
     const {
-      currentTurn, gameStatus, gameState, enPassant, promotion, userColor
+      currentTurn, gameBoard, gameStatus, enPassant, promotion
     } = this.req.body
     const game = await this.database("games")
       .insert({
         current_turn: currentTurn,
+        game_board: gameBoard,
         game_status: gameStatus,
-        game_state: gameState,
         en_passant: enPassant,
         promotion: promotion,
-        user_color: userColor
+
       })
       .returning("*")
     return (game[0]);
@@ -68,7 +68,7 @@ export class Game {
         id: id
       })
       .first();
-    game.game_status = game.game_status.map(e => e.map(m => {
+    game.game_board = game.game_board.map(e => e.map(m => {
       return m != "." ? JSON.parse(m) : "."
     }))
 
@@ -78,7 +78,7 @@ export class Game {
   //update game by id
   async updateGame() {
     const {
-      currentTurn, gameState, gameStatus, enPassant, promotion
+      currentTurn, gameBoard, gameStatus, enPassant, promotion
     } = this.req.body
     const id = this.req.params.id
     const game = await this.database("games")
@@ -87,7 +87,7 @@ export class Game {
       })
       .update({
         current_turn: currentTurn,
-        game_state: gameState,
+        game_board: gameBoard,
         game_status: gameStatus,
         en_passant: enPassant,
         promotion: promotion

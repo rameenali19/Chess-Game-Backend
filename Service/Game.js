@@ -10,7 +10,7 @@ export class Game {
   async createGame() {
 
     const {
-      currentTurn, gameBoard, gameStatus, enPassant, promotion
+      currentTurn, gameBoard, gameStatus, enPassant, promotion, playerColor, guestId
     } = this.req.body
     const game = await this.database("games")
       .insert({
@@ -22,6 +22,15 @@ export class Game {
 
       })
       .returning("*")
+    const gameId = game[0].id;
+
+    await this.database("players")
+      .insert({
+        player_color: playerColor,
+        game_id: gameId,
+        guest_id: guestId
+      })
+      .returning("*")
     return (game[0]);
   }
 
@@ -29,11 +38,10 @@ export class Game {
   async joinGame() {
     const gameId = this.req.params.gameid;
     const {
-      playerId, playerColor, guestId
+      playerColor, guestId
     } = this.req.body
     const player = await this.database("players")
       .insert({
-        player_id: playerId,
         player_color: playerColor,
         game_id: gameId,
         guest_id: guestId
@@ -52,7 +60,7 @@ export class Game {
         id: guestId
       })
       .returning("*")
-    return ("hello");
+    return ("Guest created");
   }
 
   //deleting a game by ID
@@ -144,5 +152,16 @@ export class Game {
     return {
       message: "moves added Succesfully!"
     }
+  }
+
+  //get player by games ID
+  async getPlayer() {
+    const gameId = this.req.params.gameid;
+    const player = await this.database("players")
+      .where({
+        game_id: gameId
+      })
+      .first();
+    return player
   }
 }

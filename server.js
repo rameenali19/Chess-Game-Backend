@@ -34,6 +34,13 @@ app.post("/games/:gameid/player", async (req, res) => {
   res.json(response)
 })
 
+//get player by game id
+app.get("/games/:gameid/player", async (req, res) => {
+  const player = new Game(database, req, res);
+  const response = await player.getPlayer();
+  res.json(response)
+})
+
 //deleting a game by id
 app.delete("/games/:id", async (req, res) => {
   const game = new Game(database, req, res);

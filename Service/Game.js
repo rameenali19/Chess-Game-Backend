@@ -105,11 +105,13 @@ export class Game {
 
   //get game by id
   async getGame() {
+    const guestId = this.req.query.guestId
     const id = this.req.params.id
     const game = await this.database("games")
-      .where({
-        id: id
-      })
+      .join("players", "games.id", "players.game_id")
+      .where("players.guest_id", guestId)
+      .select("games.*", "players.player_color")
+      .where("games.id", id)
       .first();
     game.game_board = game.game_board.map(e => e.map(m => {
       return m != "." ? JSON.parse(m) : "."

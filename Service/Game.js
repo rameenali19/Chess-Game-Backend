@@ -157,9 +157,11 @@ export class Game {
   //get player by games ID
   async getPlayer() {
     const gameId = this.req.params.gameid;
+    const guestId = this.req.body
     const player = await this.database("players")
       .where({
-        game_id: gameId
+        game_id: gameId,
+        guest_id: guestId
       })
       .first();
     return player

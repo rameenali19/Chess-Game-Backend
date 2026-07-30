@@ -27,6 +27,13 @@ app.post("/games", async (req, res) => {
   res.json(response.id)
 })
 
+//creating a new player
+app.post("/games/:gameid/player", async (req, res) => {
+  const player = new Game(database, req, res);
+  const response = await player.joinGame();
+  res.json(response)
+})
+
 //deleting a game by id
 app.delete("/games/:id", async (req, res) => {
   const game = new Game(database, req, res);
@@ -66,6 +73,13 @@ app.post("/games/:id", async (req, res) => {
 app.post("/games/:gameid/moves", async (req, res) => {
   const move = new Game(database, req, res);
   const response = await move.createMove();
+  res.json(response)
+})
+
+//create guestId
+app.post("/guests", async (req, res) => {
+  const guest = new Game(database, req, res);
+  const response = await guest.createGuest();
   res.json(response)
 })
 

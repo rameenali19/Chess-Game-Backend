@@ -25,6 +25,36 @@ export class Game {
     return (game[0]);
   }
 
+  //creating a new Player to join game 
+  async joinGame() {
+    const gameId = this.req.params.gameid;
+    const {
+      playerId, playerColor, guestId
+    } = this.req.body
+    const player = await this.database("players")
+      .insert({
+        player_id: playerId,
+        player_color: playerColor,
+        game_id: gameId,
+        guest_id: guestId
+      })
+      .returning("*")
+    return (player[0]);
+  }
+
+  //creating guest
+  async createGuest() {
+    const {
+      guestId
+    } = this.req.body
+    const guest = await this.database("guests")
+      .insert({
+        id: guestId
+      })
+      .returning("*")
+    return ("hello");
+  }
+
   //deleting a game by ID
   async deleteGame() {
     const id = this.req.params.id;

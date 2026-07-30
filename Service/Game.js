@@ -88,10 +88,10 @@ export class Game {
 
   //get all games
   async getAllGames() {
-    const guestId = this.query.guestId
+    const guestId = this.req.query.guestId
     const page = this.req.query.page
     const limit = this.req.query.limit
-    const offset = (page - 1) * 10
+    const offset = (page - 1) * limit
     const game = await this.database("games")
 
       .join("players", "games.id", "players.game_id")
@@ -161,7 +161,7 @@ export class Game {
 
   //get player by games ID
   async getPlayer() {
-    const guestId = this.query.guestId
+    const guestId = this.req.query.guestId
     const gameId = this.req.params.gameid;
     const player = await this.database("players")
       .where({

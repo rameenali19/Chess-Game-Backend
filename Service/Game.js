@@ -104,7 +104,7 @@ export class Game {
   }
 
   //get game by id
-  async getGame() {
+  async getGameAndPlayer() {
     const guestId = this.req.query.guestId
     const id = this.req.params.id
     const game = await this.database("games")

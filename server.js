@@ -65,7 +65,7 @@ app.get("/games", async (req, res) => {
 //get game by id
 app.get("/games/:id", async (req, res) => {
   const game = new Game(database, req, res);
-  const response = await game.getGame();
+  const response = await game.getGameAndPlayer();
   res.json(response)
 })
 

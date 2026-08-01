@@ -27,12 +27,6 @@ app.post("/games", async (req, res) => {
   res.json(response.id)
 })
 
-//creating a new player
-app.post("/games/:gameid/player", async (req, res) => {
-  const player = new Game(database, req, res);
-  const response = await player.joinGame();
-  res.json(response)
-})
 
 //get player by game id
 app.get("/games/:gameid/player", async (req, res) => {
@@ -62,10 +56,17 @@ app.get("/games", async (req, res) => {
   res.json(response)
 })
 
-//get game by id
-app.get("/games/:id", async (req, res) => {
+//get game by id and player
+app.get("/games/:id/player/:guestId", async (req, res) => {
   const game = new Game(database, req, res);
   const response = await game.getGameAndPlayer();
+  res.json(response)
+})
+
+//join game by id 
+app.post("/games/:id/join", async (req, res) => {
+  const game = new Game(database, req, res);
+  const response = await game.joinGame();
   res.json(response)
 })
 

@@ -34,22 +34,6 @@ export class Game {
     return (game[0]);
   }
 
-  //creating a new Player to join game 
-  async joinGame() {
-    const gameId = this.req.params.gameid;
-    const {
-      playerColor, guestId
-    } = this.req.body
-    const player = await this.database("players")
-      .insert({
-        player_color: playerColor,
-        game_id: gameId,
-        guest_id: guestId
-      })
-      .returning("*")
-    return (player[0]);
-  }
-
   //creating guest
   async createGuest() {
     const {
@@ -103,9 +87,9 @@ export class Game {
     return game
   }
 
-  //get game by id
+  //get game by id and player
   async getGameAndPlayer() {
-    const guestId = this.req.query.guestId
+    const guestId = this.req.params.guestId
     const id = this.req.params.id
     const game = await this.database("games")
       .join("players", "games.id", "players.game_id")
@@ -118,6 +102,44 @@ export class Game {
     }))
 
     return game
+  }
+
+  //join game by id 
+  async joinGame() {
+    const id = this.req.params.id
+    const guestId = this.req.query.guestId
+
+    const game = await this.database("games")
+      .join("players", "games.id", "players.game_id")
+      .select("games.*", "players.player_color")
+      .where("games.id", id)
+      .first();
+
+    if (!game || game.game_status !== "waiting") {
+      return {
+        message: "Invalid ID"
+      }
+    }
+
+    const currentColor = game.player_color === "White" ? "Black" : "White";
+    const player = await this.database("players")
+      .insert({
+        player_color: currentColor,
+        game_id: game.id,
+        guest_id: guestId
+      })
+
+    await this.database("games")
+      .where({
+        id: game.id
+      })
+      .insert({
+        game_status: "unfinished"
+      })
+    return {
+      gameId: game.id,
+      playerColor: currentColor
+    }
   }
 
   //update game by id

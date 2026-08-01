@@ -5,12 +5,21 @@ dotenv.config();
 
 //importing express
 import express from "express"
+import { createServer } from "http";
+import { Server } from "socket.io"
 
 import { Game } from "./Service/Game.js";
 import database from "./Knex.js";
 
+
 //returning server
 const app = express();
+const httpServer = createServer(app)
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:5173",
+  }
+})
 
 //converting the JSON text to  JavaScript object
 app.use(express.json());
@@ -91,8 +100,15 @@ app.post("/guests", async (req, res) => {
   res.json(response)
 })
 
+io.on("connection", (socket) => {
+  console.log("user connected")
+  socket.on("disconnect", () => {
+    console.log("user disconnected")
+  })
+})
+
 //assigning port to the server
-app.listen(3000, () => {
+httpServer.listen(3000, () => {
   console.log("Server is working!");
 })
 

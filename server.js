@@ -7,6 +7,7 @@ dotenv.config();
 import express from "express"
 import { createServer } from "http";
 import { Server } from "socket.io"
+import { socketHandler } from "./Socket/socketHandler.js";
 
 import { Game } from "./Service/Game.js";
 import database from "./Knex.js";
@@ -100,12 +101,7 @@ app.post("/guests", async (req, res) => {
   res.json(response)
 })
 
-io.on("connection", (socket) => {
-  console.log("user connected")
-  socket.on("disconnect", () => {
-    console.log("user disconnected")
-  })
-})
+socketHandler(io)
 
 //assigning port to the server
 httpServer.listen(3000, () => {

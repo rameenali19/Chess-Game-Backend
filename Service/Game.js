@@ -107,7 +107,7 @@ export class Game {
   //join game by id 
   async joinGame() {
     const id = this.req.params.id
-    const guestId = this.req.query.guestId
+    const guestId = this.req.body.guestId
 
     const game = await this.database("games")
       .join("players", "games.id", "players.game_id")
@@ -133,7 +133,7 @@ export class Game {
       .where({
         id: game.id
       })
-      .insert({
+      .update({
         game_status: "unfinished"
       })
     return {

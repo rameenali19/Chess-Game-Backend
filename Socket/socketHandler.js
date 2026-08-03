@@ -1,12 +1,15 @@
 export function socketHandler(io) {
 
   io.on("connection", (socket) => {
-    console.log("user connected")
 
     socket.on("joinGame", ({ gameId, canJoin }) => {
-      socket.join(gameId)
+
+      const resolvedRoom = parseInt(gameId);
+
+      socket.join(resolvedRoom)
       if (canJoin) {
-        io.to(gameId).emit("playerJoined")
+        io.to(resolvedRoom).emit("playerJoined")
+
       }
     })
 

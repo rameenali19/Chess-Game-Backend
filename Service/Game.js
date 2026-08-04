@@ -51,11 +51,18 @@ export class Game {
   //deleting a game by ID
   async deleteGame() {
     const id = this.req.params.id;
+
+    const player = await this.database("players")
+      .where({
+        game_id: id
+      })
+      .del();
     const game = await this.database("games")
       .where({
         id: id
       })
       .del();
+
     return {
       message: "Game Deleted Successfully"
     }

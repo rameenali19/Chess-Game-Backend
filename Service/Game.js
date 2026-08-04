@@ -1,18 +1,10 @@
+import database from "../Knex.js";
 export class Game {
 
-  constructor(database, req, res) {
-    this.database = database;
-    this.req = req;
-    this.res = res;
-  }
-
   //creating a new game
-  async createGame() {
+  async createGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, mode, playerColor, guestId) {
 
-    const {
-      currentTurn, gameBoard, gameStatus, enPassant, promotion, mode, playerColor, guestId
-    } = this.req.body
-    const game = await this.database("games")
+    const game = await database("games")
       .insert({
         current_turn: currentTurn,
         game_board: gameBoard,
@@ -25,7 +17,7 @@ export class Game {
       .returning("*")
     const gameId = game[0].id;
 
-    await this.database("players")
+    await database("players")
       .insert({
         player_color: playerColor,
         game_id: gameId,
@@ -36,11 +28,9 @@ export class Game {
   }
 
   //creating guest
-  async createGuest() {
-    const {
-      guestId
-    } = this.req.body
-    const guest = await this.database("guests")
+  async createGuest(guestId) {
+
+    const guest = await database("guests")
       .insert({
         id: guestId
       })
@@ -49,15 +39,14 @@ export class Game {
   }
 
   //deleting a game by ID
-  async deleteGame() {
-    const id = this.req.params.id;
+  async deleteGame(id) {
 
-    const player = await this.database("players")
+    const player = await database("players")
       .where({
         game_id: id
       })
       .del();
-    const game = await this.database("games")
+    const game = await database("games")
       .where({
         id: id
       })
@@ -69,9 +58,8 @@ export class Game {
   }
 
   //get moves by ID
-  async getMoves() {
-    const gameId = this.req.params.gameid;
-    const move = await this.database("moves")
+  async getMoves(gameId) {
+    const move = await database("moves")
       .where({
         game_id: gameId
       })
@@ -79,13 +67,9 @@ export class Game {
   }
 
   //get all games
-  async getAllGames() {
-    const guestId = this.req.query.guestId
-    const page = this.req.query.page
-    const limit = this.req.query.limit
-    const offset = (page - 1) * limit
-    const game = await this.database("games")
+  async getAllGames(guestId, page, limit, offset) {
 
+    const game = await database("games")
       .join("players", "games.id", "players.game_id")
       .where("players.guest_id", guestId)
       .select("games.*")
@@ -96,10 +80,9 @@ export class Game {
   }
 
   //get game by id and player
-  async getGameAndPlayer() {
-    const guestId = this.req.params.guestId
-    const id = this.req.params.id
-    const game = await this.database("games")
+  async getGameAndPlayer(guestId, id) {
+
+    const game = await database("games")
       .join("players", "games.id", "players.game_id")
       .where("players.guest_id", guestId)
       .select("games.*", "players.player_color")
@@ -113,11 +96,9 @@ export class Game {
   }
 
   //join game by id 
-  async joinGame() {
-    const id = this.req.params.id
-    const guestId = this.req.body.guestId
+  async joinGame(id, guestId) {
 
-    const game = await this.database("games")
+    const game = await database("games")
       .join("players", "games.id", "players.game_id")
       .select("games.*", "players.player_color")
       .where("games.id", id)
@@ -130,14 +111,14 @@ export class Game {
     }
 
     const currentColor = game.player_color === "White" ? "Black" : "White";
-    const player = await this.database("players")
+    const player = await database("players")
       .insert({
         player_color: currentColor,
         game_id: game.id,
         guest_id: guestId
       })
 
-    await this.database("games")
+    await database("games")
       .where({
         id: game.id
       })
@@ -151,14 +132,11 @@ export class Game {
   }
 
   //update game by id
-  async updateGame() {
-    const {
-      currentTurn, gameBoard, gameStatus, enPassant, promotion
-    } = this.req.body
-    const id = this.req.params.id
-    const game = await this.database("games")
+  async updateGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, id) {
+
+    const game = await database("games")
       .where({
-        id,
+        id
       })
       .update({
         current_turn: currentTurn,
@@ -173,12 +151,9 @@ export class Game {
   }
 
   //creating move of game
-  async createMove() {
-    const {
-      pieceColor, pieceType, source, destination
-    } = this.req.body
-    const gameId = this.req.params.gameid
-    const game = await this.database("moves")
+  async createMove(pieceColor, pieceType, source, destination, gameId) {
+
+    const game = await database("moves")
       .insert({
         piece_color: pieceColor,
         piece_type: pieceType,
@@ -192,10 +167,9 @@ export class Game {
   }
 
   //get player by games ID
-  async getPlayer() {
-    const guestId = this.req.query.guestId
-    const gameId = this.req.params.gameid;
-    const player = await this.database("players")
+  async getPlayer(guestId, gameId) {
+
+    const player = await database("players")
       .where({
         game_id: gameId,
         guest_id: guestId
@@ -204,3 +178,4 @@ export class Game {
     return player
   }
 }
+export default new Game();

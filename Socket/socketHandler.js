@@ -1,4 +1,4 @@
-
+import Game from "../Service/Game.js";
 export function socketHandler(io) {
 
   io.on("connection", (socket) => {
@@ -12,9 +12,17 @@ export function socketHandler(io) {
       }
     })
 
-    socket.on("gameUpdate", ({ gameId, gameData }) => {
+    socket.on("gameUpdate", async ({ gameId, gameData }) => {
       const resolvedRoom = parseInt(gameId);
 
+      await Game.updateGame(
+        gameData.turn,
+        gameData.board,
+        gameData.status,
+        gameData.enPassant,
+        gameData.promotion,
+        gameId
+      );
       socket.to(resolvedRoom).emit("gameUpdate", gameData)
     })
 

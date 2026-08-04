@@ -8,9 +8,7 @@ import express from "express"
 import { createServer } from "http";
 import { Server } from "socket.io"
 import { socketHandler } from "./Socket/socketHandler.js";
-
-import { Game } from "./Service/Game.js";
-import database from "./Knex.js";
+import gameController from "./Controller/gameController.js"
 
 
 //returning server
@@ -32,72 +30,62 @@ app.use(cors());
 
 //creating a new game
 app.post("/games", async (req, res) => {
-  const game = new Game(database, req, res);
-  const response = await game.createGame();
+  const response = await gameController.createGame(req);
   res.json(response.id)
 })
 
 
 //get player by game id
-app.get("/games/:gameid/player", async (req, res) => {
-  const player = new Game(database, req, res);
-  const response = await player.getPlayer();
+app.get("/games/:gameId/player", async (req, res) => {
+  const response = await gameController.getPlayer(req);
   res.json(response)
 })
 
 //deleting a game by id
 app.delete("/games/:id", async (req, res) => {
-  const game = new Game(database, req, res);
-  const response = await game.deleteGame();
+  const response = await gameController.deleteGame(req);
   res.json(response)
 })
 
 //get moves of game by id
-app.get("/games/:gameid/moves", async (req, res) => {
-  const moves = new Game(database, req, res);
-  const response = await moves.getMoves();
+app.get("/games/:gameId/moves", async (req, res) => {
+  const response = await gameController.getMoves(req);
   res.json(response)
 })
 
 //get all games
 app.get("/games", async (req, res) => {
-  const game = new Game(database, req, res);
-  const response = await game.getAllGames();
+  const response = await gameController.getAllGames(req);
   res.json(response)
 })
 
 //get game by id and player
 app.get("/games/:id/player/:guestId", async (req, res) => {
-  const game = new Game(database, req, res);
-  const response = await game.getGameAndPlayer();
+  const response = await gameController.getGameAndPlayer(req);
   res.json(response)
 })
 
 //join game by id 
 app.post("/games/:id/join", async (req, res) => {
-  const game = new Game(database, req, res);
-  const response = await game.joinGame();
+  const response = await gameController.joinGame(req);
   res.json(response)
 })
 
 //updating game by id
 app.post("/games/:id", async (req, res) => {
-  const game = new Game(database, req, res);
-  const response = await game.updateGame();
+  const response = await gameController.updateGame(req);
   res.json(response)
 })
 
 //create move of game
-app.post("/games/:gameid/moves", async (req, res) => {
-  const move = new Game(database, req, res);
-  const response = await move.createMove();
+app.post("/games/:gameId/moves", async (req, res) => {
+  const response = await gameController.createMove(req);
   res.json(response)
 })
 
 //create guestId
 app.post("/guests", async (req, res) => {
-  const guest = new Game(database, req, res);
-  const response = await guest.createGuest();
+  const response = await gameController.createGuest(req);
   res.json(response)
 })
 

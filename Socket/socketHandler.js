@@ -14,6 +14,8 @@ export function socketHandler(io) {
       }
     })
 
+    //----------------------------------------------------------------------
+
     //recieving updated board and values 
     socket.on("gameUpdate", async ({ gameId, gameData }) => {
       socket.gameId = parseInt(gameId);
@@ -30,6 +32,26 @@ export function socketHandler(io) {
 
       //sending updated board and values 
       socket.to(gameId).emit("gameUpdate", gameData)
+    })
+
+    //------------------------------------------------------------------------
+
+    //player gets disconnected
+    socket.on("disconnect", async () => {
+      const gameId = socket.gameId
+      if (!gameId) return
+
+      //updating the gameState to waiting 
+      await Game.updateGameStatus(gameId, "waiting")
+
+      //checking is the room is empty or other player is still connected
+      const room = io.sockets.adapter.rooms.get(String(gameId))
+      const remainingPlayer = room ? room.size : 0
+
+      //send message to the remaining player
+      if (remainingPlayer === 1) {
+        socket.to(gameId).emit("opponentDisconnected", gameId)
+      }
     })
 
   })

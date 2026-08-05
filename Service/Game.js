@@ -98,37 +98,49 @@ export class Game {
 
   //join game by id 
   async joinGame(id, guestId) {
-
-    const game = await database("games")
-      .join("players", "games.id", "players.game_id")
-      .select("games.*", "players.player_color")
-      .where("games.id", id)
-      .first();
-
-    if (!game || game.game_status !== "waiting") {
+    const previousPlayer = await database("players")
+      .where({
+        guest_id: guestId,
+        game_id: id
+      })
+      .first()
+    if (previousPlayer) {
       return {
-        message: "Invalid ID"
+        reconnect: true
       }
     }
+    else {
+      const game = await database("games")
+        .join("players", "games.id", "players.game_id")
+        .select("games.*", "players.player_color")
+        .where("games.id", id)
+        .first();
 
-    const currentColor = game.player_color === "White" ? "Black" : "White";
-    const player = await database("players")
-      .insert({
-        player_color: currentColor,
-        game_id: game.id,
-        guest_id: guestId
-      })
+      if (!game || game.game_status !== "waiting") {
+        return {
+          message: "Invalid ID"
+        }
+      }
+      const currentColor = game.player_color === "White" ? "Black" : "White";
+      const player = await database("players")
+        .insert({
+          player_color: currentColor,
+          game_id: game.id,
+          guest_id: guestId
+        })
+      await database("games")
+        .where({
+          id: game.id
+        })
+        .update({
+          game_status: "unfinished"
+        })
+      return {
+        gameId: game.id,
+        playerColor: currentColor,
+        reconnect: false
 
-    await database("games")
-      .where({
-        id: game.id
-      })
-      .update({
-        game_status: "unfinished"
-      })
-    return {
-      gameId: game.id,
-      playerColor: currentColor
+      }
     }
   }
 

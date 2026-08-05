@@ -4,15 +4,18 @@ export function socketHandler(io) {
   io.on("connection", (socket) => {
 
     //player joins the game
-    socket.on("joinGame", ({ gameId, canJoin }) => {
-      gameId = String(gameId)
-      socket.join(gameId)
+    socket.on("joinGame", async ({ gameId, reconnect }) => {
 
-      //player 2 informs the player 1 on it's joining
-      if (canJoin) {
-
-        io.to(gameId).emit("playerJoined")
+      gameId = String(gameId)   //converting to string
+      socket.join(gameId)    //joining the game
+      if (reconnect) {
+        socket.to(gameId).emit("opponentReconnected")
       }
+
+      else {
+        socket.to(gameId).emit("playerJoined")
+      }
+
     })
 
     //----------------------------------------------------------------------

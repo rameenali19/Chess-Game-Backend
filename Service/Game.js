@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import database from "../Knex.js";
 export class Game {
 
@@ -176,6 +177,17 @@ export class Game {
       })
       .first();
     return player
+  }
+
+  //update game status
+  async updateGameStatus(gameId, status) {
+    const game = await database("games")
+      .where({
+        id: gameId,
+      })
+      .update({
+        game_status: status
+      })
   }
 }
 export default new Game();

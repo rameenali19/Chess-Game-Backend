@@ -3,18 +3,22 @@ export function socketHandler(io) {
 
   io.on("connection", (socket) => {
 
+    //player joins the game
     socket.on("joinGame", ({ gameId, canJoin }) => {
-      const resolvedRoom = parseInt(gameId);
-      socket.join(resolvedRoom)
+      socket.gameId = parseInt(gameId);
+      socket.join(gameId)
 
+      //player 2 informs the player 1 on it's joining
       if (canJoin) {
-        io.to(resolvedRoom).emit("playerJoined")
+        io.to(gameId).emit("playerJoined")
       }
     })
 
+    //recieving updated board and values 
     socket.on("gameUpdate", async ({ gameId, gameData }) => {
-      const resolvedRoom = parseInt(gameId);
+      socket.gameId = parseInt(gameId);
 
+      //updatig the database 
       await Game.updateGame(
         gameData.turn,
         gameData.board,
@@ -23,7 +27,9 @@ export function socketHandler(io) {
         gameData.promotion,
         gameId
       );
-      socket.to(resolvedRoom).emit("gameUpdate", gameData)
+
+      //sending updated board and values 
+      socket.to(gameId).emit("gameUpdate", gameData)
     })
 
   })

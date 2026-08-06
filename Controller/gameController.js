@@ -52,13 +52,15 @@ class gameController {
 
   //get game by id and player
   async getGameAndPlayer(req) {
-    const { guestId, id } = req.params
+    console.log("GET GAME", req.params);
+    const { id, guestId } = req.params
     const result = await Game.getGameAndPlayer(guestId, id)
     return (result)
   }
 
   //join game by id 
   async joinGame(req) {
+    console.log("JOIN API", req.params);
     const { id } = req.params
     const { guestId } = req.body
     const result = await Game.joinGame(id, guestId)
@@ -68,6 +70,7 @@ class gameController {
 
   //update game by id
   async updateGame(req) {
+    console.log("UPDATE GAME", req.params);
     const {
       currentTurn, gameBoard, gameStatus, enPassant, promotion
     } = req.body

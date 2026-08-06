@@ -4,16 +4,22 @@ export function socketHandler(io) {
   io.on("connection", (socket) => {
 
     //player joins the game
-    socket.on("joinGame", async ({ gameId, reconnect }) => {
+    socket.on("joinGame", async ({ gameId }) => {
 
       gameId = String(gameId)   //converting to string
+      socket.gameId = gameId
       socket.join(gameId)    //joining the game
-      if (reconnect) {
-        socket.to(gameId).emit("opponentReconnected")
+      const room = io.sockets.adapter.rooms.get(gameId);
+      const players = room ? room.size : 0;
+      console.log(`Room ${gameId} has ${players} player(s)`);
+      if (players === 1) {
+        socket.emit("waitingScreen")
       }
-
-      else {
-        socket.to(gameId).emit("playerJoined")
+      if (players === 2) {
+        await Game.updateGameStatus(gameId, "unfinished");
+        console.log("SERVER EMIT:", { gameId });
+        io.to(gameId).emit("playerJoined", { gameId })
+        socket.to(gameId).emit("opponentReconnected")
       }
 
     })
@@ -23,7 +29,7 @@ export function socketHandler(io) {
     //recieving updated board and values 
     socket.on("gameUpdate", async ({ gameId, gameData }) => {
       gameId = String(gameId)
-
+      socket.gameId = gameId
       //updatig the database 
       await Game.updateGame(
         gameData.turn,
@@ -42,17 +48,22 @@ export function socketHandler(io) {
 
     //player gets disconnected
     socket.on("leavingGame", async ({ gameId }) => {
-      gameId = String(gameId)
-      if (!gameId) return
+      const id = socket.gameId
+      if (!id) return
+      //leaving the game room
+      socket.leave(id)
 
       //updating the gameState to waiting 
-      await Game.updateGameStatus(gameId, "waiting")
+      await Game.updateGameStatus(id, "waiting")
 
-      //informing opponent about leaving
-      socket.to(gameId).emit("opponentDisconnected")
+      const room = io.sockets.adapter.rooms.get(id);
+      const players = room ? room.size : 0;
 
-      //leaving the game room
-      socket.leave(gameId)
+      if (players === 1) {
+        //informing opponent about leaving
+        socket.to(gameId).emit("opponentDisconnected")
+
+      }
 
     })
 

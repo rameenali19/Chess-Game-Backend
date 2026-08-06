@@ -117,14 +117,7 @@ export class Game {
       .first()
 
     if (previousPlayer) {
-      await database("games")
-        .where({ id })
-        .update({
-          game_status: "unfinished"
-        });
-      return {
-        reconnect: true
-      }
+      return
     }
 
     const game = await database("games")
@@ -145,18 +138,9 @@ export class Game {
         game_id: game.id,
         guest_id: guestId
       })
-    await database("games")
-      .where({
-        id: game.id
-      })
-      .update({
-        game_status: "unfinished"
-      })
     return {
       gameId: game.id,
       playerColor: currentColor,
-      reconnect: false
-
     }
   }
 

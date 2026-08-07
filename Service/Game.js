@@ -42,23 +42,20 @@ export class Game {
   //deleting a game by ID
   async deleteGame(id) {
 
-    const player = await database("players")
-      .where({
-        game_id: id
-      })
-      .del();
     const game = await database("games")
       .where({
         id: id
       })
-      .del();
+      .update({
+        delete: true
+      });
 
     return {
       message: "Game Deleted Successfully"
     }
   }
 
-  //get moves by ID
+  // Get moves by ID
   async getMoves(gameId) {
     const move = await database("moves")
       .where({
@@ -74,6 +71,9 @@ export class Game {
       .join("players", "games.id", "players.game_id")
       .where("players.guest_id", guestId)
       .select("games.*")
+      .where({
+        delete: false
+      })
       .limit(limit)
       .offset(offset)
       .orderBy("id", "asc");
@@ -100,7 +100,10 @@ export class Game {
   async joinGame(id, guestId) {
 
     const gameExists = await database("games")
-      .where({ id })
+      .where({
+        id,
+        delete: false
+      })
       .first();
 
     if (!gameExists) {

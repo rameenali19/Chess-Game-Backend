@@ -54,18 +54,20 @@ export function socketHandler(io) {
       socket.leave(id)
 
       //updating the gameState to waiting 
-      await Game.updateGameStatus(id, "waiting")
 
       const room = io.sockets.adapter.rooms.get(id);
       const players = room ? room.size : 0;
 
       if (players === 1) {
+        await Game.updateGameStatus(id, "waiting")
         //informing opponent about leaving
         socket.to(gameId).emit("opponentDisconnected")
 
       }
 
     })
+
+    //------------------------------------------------------------------------
 
   })
 }

@@ -205,5 +205,19 @@ export class Game {
         game_status: status
       })
   }
+
+  //Get total games
+  async getTotalGames(guestId) {
+    const totalGames = await database("games")
+      .join("players", "games.id", "players.game_id")
+      .where("players.guest_id", guestId)
+      .countDistinct("games.id as count")
+      .where({
+        delete: false
+      })
+      .first()
+
+    return Number(totalGames.count)
+  }
 }
 export default new Game();

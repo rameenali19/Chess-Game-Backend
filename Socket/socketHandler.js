@@ -14,6 +14,7 @@ export function socketHandler(io) {
       console.log(`Room ${gameId} has ${players} player(s)`);
       if (players === 1) {
         socket.emit("waitingScreen")
+        io.to(gameId).emit("opponentDisconnected")
       }
       if (players === 2) {
         await Game.updateGameStatus(gameId, "unfinished");

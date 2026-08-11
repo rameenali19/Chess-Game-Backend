@@ -220,5 +220,16 @@ export class Game {
 
     return Number(totalGames.count)
   }
+
+  //get game by ID
+  async getGame(id) {
+    const game = await database("games")
+      .where({
+        id: id
+      })
+      .first()
+
+    return (game)
+  }
 }
 export default new Game();

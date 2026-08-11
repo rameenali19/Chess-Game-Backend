@@ -9,9 +9,15 @@ export function socketHandler(io) {
       gameId = String(gameId)   //converting to string
       socket.gameId = gameId
       socket.join(gameId)    //joining the game
+
       const room = io.sockets.adapter.rooms.get(gameId);
       const players = room ? room.size : 0;
       console.log(`Room ${gameId} has ${players} player(s)`);
+
+      const status = await Game.getGame(gameId)
+      if (status.game_status === "finished")
+        return
+
       if (players === 1) {
         socket.emit("waitingScreen")
         io.to(gameId).emit("opponentDisconnected")
@@ -60,11 +66,14 @@ export function socketHandler(io) {
       const room = io.sockets.adapter.rooms.get(id);
       const players = room ? room.size : 0;
 
+      const status = await Game.getGame(id)
+      if (status.game_status === "finished")
+        return
+
       if (players === 1) {
         await Game.updateGameStatus(id, "waiting")
         //informing opponent about leaving
         socket.to(gameId).emit("opponentDisconnected")
-
       }
 
     })

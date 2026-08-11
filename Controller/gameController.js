@@ -97,5 +97,13 @@ class gameController {
 
     return (result)
   }
+
+  //Get game by ID
+  async getGame(req) {
+    const { id } = req.params
+    const result = await Game.getGame(gameId)
+
+    return (result)
+  }
 }
 export default new gameController

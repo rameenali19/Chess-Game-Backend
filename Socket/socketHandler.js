@@ -67,7 +67,7 @@ export function socketHandler(io) {
         moveData.destination,
         gameId
       );
-
+      socket.to(gameId).emit("moveCreated", moveData);
     })
 
     //------------------------------------------------------------------------

@@ -61,6 +61,12 @@ export class Game {
       .where({
         game_id: gameId
       })
+      .select(
+        "piece_color as pieceColor",
+        "piece_type as pieceType",
+        "source",
+        "destination"
+      );
     return move
   }
 

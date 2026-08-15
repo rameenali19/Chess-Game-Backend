@@ -135,7 +135,7 @@ export class Game {
       .where("games.id", id)
       .first();
 
-    if (!game || game.game_status !== "waiting") {
+    if (!game || game.game_status !== "waiting" || game.mode !== "multiplayer") {
       return {
         message: "Invalid ID"
       }

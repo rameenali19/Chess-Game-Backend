@@ -72,10 +72,10 @@ class gameController {
   async updateGame(req) {
     console.log("UPDATE GAME", req.params);
     const {
-      currentTurn, gameBoard, gameStatus, enPassant, promotion, winner
+      currentTurn, gameBoard, gameStatus, enPassant, promotion, winner, endReason
     } = req.body
     const { id } = req.params
-    const result = await Game.updateGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, winner, id)
+    const result = await Game.updateGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, winner, endReason, id)
     return (result)
   }
 

@@ -149,7 +149,7 @@ export class Game {
 
 
   //update game by id
-  async updateGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, winner, id) {
+  async updateGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, winner, endReason, id) {
 
     const game = await database("games")
       .where({
@@ -161,7 +161,8 @@ export class Game {
         game_status: gameStatus,
         en_passant: enPassant,
         promotion: promotion,
-        winner: winner
+        winner: winner,
+        end_reason: endReason
       })
     return {
       message: "Game Updated Succesfully!"

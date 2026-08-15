@@ -45,6 +45,7 @@ export function socketHandler(io) {
         gameData.enPassant,
         gameData.promotion,
         gameData.winner,
+        gameData.endReason,
         gameId
       );
 

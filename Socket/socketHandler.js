@@ -55,6 +55,23 @@ export function socketHandler(io) {
 
     //------------------------------------------------------------------------
 
+    //creating moves
+    socket.on("createMove", async ({ gameId, moveData }) => {
+      gameId = String(gameId)
+      socket.gameId = gameId
+      //updatig the database 
+      await Game.createMove(
+        moveData.pieceColor,
+        moveData.pieceType,
+        moveData.source,
+        moveData.destination,
+        gameId
+      );
+
+    })
+
+    //------------------------------------------------------------------------
+
     //player gets disconnected
     socket.on("leavingGame", async ({ gameId }) => {
       const id = socket.gameId

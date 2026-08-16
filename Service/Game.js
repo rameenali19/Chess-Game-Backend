@@ -112,7 +112,7 @@ export class Game {
       })
       .first();
 
-    if (!gameExists) {
+    if (!gameExists || gameExists.game_status !== "waiting" || gameExists.mode !== "multiplayer") {
       return {
         message: "Invalid ID"
       };

@@ -71,15 +71,21 @@ export class Game {
   }
 
   //get all games
-  async getAllGames(guestId, page, limit, offset) {
+  async getAllGames(guestId, page, limit, offset, status) {
 
-    const game = await database("games")
+    const query = database("games")
       .join("players", "games.id", "players.game_id")
       .where("players.guest_id", guestId)
       .select("games.*")
       .where({
         delete: false
       })
+    if (status) {
+      query.where({
+        game_status: status
+      })
+    }
+    const game = await query
       .limit(limit)
       .offset(offset)
       .orderBy("id", "asc");

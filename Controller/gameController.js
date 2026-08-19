@@ -41,12 +41,12 @@ class gameController {
 
   //get all games
   async getAllGames(req) {
-    const { guestId } = req.query
+    const { guestId, status } = req.query
     const page = Number(req.query.page);
     const limit = Number(req.query.limit);
     const offset = (page - 1) * limit
     const total = await Game.getTotalGames(guestId)
-    const result = await Game.getAllGames(guestId, page, limit, offset)
+    const result = await Game.getAllGames(guestId, page, limit, offset, status)
     return ({ result, total })
   }
 

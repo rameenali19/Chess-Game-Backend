@@ -45,7 +45,7 @@ class gameController {
     const page = Number(req.query.page);
     const limit = Number(req.query.limit);
     const offset = (page - 1) * limit
-    const total = await Game.getTotalGames(guestId)
+    const total = await Game.getTotalGames(guestId, status)
     const result = await Game.getAllGames(guestId, page, limit, offset, status)
     return ({ result, total })
   }

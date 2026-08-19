@@ -221,14 +221,20 @@ export class Game {
   }
 
   //Get total games
-  async getTotalGames(guestId) {
-    const totalGames = await database("games")
+  async getTotalGames(guestId, status) {
+    const query = database("games")
       .join("players", "games.id", "players.game_id")
       .where("players.guest_id", guestId)
-      .countDistinct("games.id as count")
       .where({
         delete: false
       })
+    if (status) {
+      query.where({
+        game_status: status
+      })
+    }
+    const totalGames = await query
+      .countDistinct("games.id as count")
       .first()
 
     return Number(totalGames.count)

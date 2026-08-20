@@ -1,4 +1,4 @@
-import Game from "../Service/Game.js";
+import Game from "../service/Game.js";
 
 class gameController {
   async createGame(req) {

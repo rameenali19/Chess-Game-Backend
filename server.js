@@ -8,7 +8,7 @@ import express from "express"
 import { createServer } from "http";
 import { Server } from "socket.io"
 import { socketHandler } from "./Socket/socketHandler.js";
-import gameController from "./Controller/gameController.js"
+import gameController from "./controller/gameController.js"
 
 
 //returning server

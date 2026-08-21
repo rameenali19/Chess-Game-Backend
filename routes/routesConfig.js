@@ -31,4 +31,35 @@ export const gameRoutes = [
     method: "get",
     handler: gameController.getAllGames
   },
+  //Get game by id and player
+  {
+    path: "/:id/player/:guestId",
+    method: "get",
+    handler: gameController.getGameAndPlayer
+  },
+  //Join game by id 
+  {
+    path: "/:id/join",
+    method: "post",
+    handler: gameController.joinGame
+  },
+  //Updating game by id
+  {
+    path: "/:id",
+    method: "post",
+    handler: gameController.updateGame
+  },
+  //Create move of game
+  {
+    path: "/:gameId/moves",
+    method: "post",
+    handler: gameController.createMove
+  },
+  //Create guestId
+  {
+    path: "/",
+    method: "post",
+    handler: gameController.createGuest
+  }
+
 ]

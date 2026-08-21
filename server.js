@@ -59,35 +59,35 @@ app.use(cors());
 //   res.json(response)
 // })
 
-//get game by id and player
-app.get("/games/:id/player/:guestId", async (req, res) => {
-  const response = await gameController.getGameAndPlayer(req);
-  res.json(response)
-})
+// //get game by id and player
+// app.get("/games/:id/player/:guestId", async (req, res) => {
+//   const response = await gameController.getGameAndPlayer(req);
+//   res.json(response)
+// })
 
-//join game by id 
-app.post("/games/:id/join", async (req, res) => {
-  const response = await gameController.joinGame(req);
-  res.json(response)
-})
+// //join game by id 
+// app.post("/games/:id/join", async (req, res) => {
+//   const response = await gameController.joinGame(req);
+//   res.json(response)
+// })
 
-//updating game by id
-app.post("/games/:id", async (req, res) => {
-  const response = await gameController.updateGame(req);
-  res.json(response)
-})
+// //updating game by id
+// app.post("/games/:id", async (req, res) => {
+//   const response = await gameController.updateGame(req);
+//   res.json(response)
+// })
 
-//create move of game
-app.post("/games/:gameId/moves", async (req, res) => {
-  const response = await gameController.createMove(req);
-  res.json(response)
-})
+// //create move of game
+// app.post("/games/:gameId/moves", async (req, res) => {
+//   const response = await gameController.createMove(req);
+//   res.json(response)
+// })
 
-//create guestId
-app.post("/guests", async (req, res) => {
-  const response = await gameController.createGuest(req);
-  res.json(response)
-})
+// //create guestId
+// app.post("/guests", async (req, res) => {
+//   const response = await gameController.createGuest(req);
+//   res.json(response)
+// })
 
 socketHandler(io)
 

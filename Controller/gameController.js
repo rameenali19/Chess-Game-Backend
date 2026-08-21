@@ -18,28 +18,28 @@ class gameController {
     return (result);
   }
 
-  //creating guest
+  //Creating guest
   async createGuest(req) {
     const { guestId } = req.body
     const result = await Game.createGuest(guestId)
     return (result);
   }
 
-  //deleting a game by ID
+  //Deleting a game by ID
   async deleteGame(req) {
     const { id } = req.params;
     const result = await Game.deleteGame(id)
     return (result)
   }
 
-  //get moves by ID
+  //Get moves by ID
   async getMoves(req) {
     const { gameId } = req.params
     const result = await Game.getMoves(gameId)
     return (result)
   }
 
-  //get all games
+  //Get all games
   async getAllGames(req) {
     const { guestId, status } = req.query
     const page = Number(req.query.page);
@@ -50,7 +50,7 @@ class gameController {
     return ({ result, total })
   }
 
-  //get game by id and player
+  //Get game by id and player
   async getGameAndPlayer(req) {
     console.log("GET GAME", req.params);
     const { id, guestId } = req.params
@@ -58,7 +58,7 @@ class gameController {
     return (result)
   }
 
-  //join game by id 
+  //Join game by id 
   async joinGame(req) {
     console.log("JOIN API", req.params);
     const { id } = req.params
@@ -68,7 +68,7 @@ class gameController {
     return (result)
   }
 
-  //update game by id
+  //Update game by id
   async updateGame(req) {
     console.log("UPDATE GAME", req.params);
     const {
@@ -79,7 +79,7 @@ class gameController {
     return (result)
   }
 
-  //creating move of game
+  //Creating move of game
   async createMove(req) {
     const {
       pieceColor, pieceType, source, destination
@@ -89,7 +89,7 @@ class gameController {
     return (result)
   }
 
-  //get player by games ID
+  //Get player by games ID
   async getPlayer(req) {
     const { guestId } = req.query
     const { gameId } = req.params

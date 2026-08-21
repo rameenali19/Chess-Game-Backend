@@ -1,4 +1,4 @@
-import gameController from "../controllers/gameController.js";
+import gameController from "../controller/gameController.js";
 
 export const gameRoutes = [
   //Creating new game
@@ -55,6 +55,9 @@ export const gameRoutes = [
     method: "post",
     handler: gameController.createMove
   },
+]
+
+export const guestRoutes = [
   //Create guestId
   {
     path: "/",

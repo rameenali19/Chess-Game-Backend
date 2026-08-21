@@ -22,12 +22,20 @@ const io = new Server(httpServer, {
 
 //Converting the JSON text to  JavaScript object
 app.use(express.json());
+//Cors
+app.use(cors());
 
 app.use("/games", gameRoutes);
 app.use("/guests", guestRoutes);
 
-//Cors
-app.use(cors());
+//Global error handler
+app.use((err, req, res, next) => {
+  console.error("Server Error:", err);
+
+  res.status(500).json({
+    error: err.message || "Internal Server Error",
+  });
+});
 
 socketHandler(io)
 

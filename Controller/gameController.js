@@ -1,6 +1,6 @@
 import Game from "../service/Game.js";
 
-class gameController {
+class GameController {
   async createGame(req) {
     const {
       currentTurn, gameBoard, gameStatus, enPassant, promotion, mode, playerColor, guestId
@@ -106,4 +106,4 @@ class gameController {
     return (result)
   }
 }
-export default new gameController
+export default GameController

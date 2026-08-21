@@ -1,59 +1,68 @@
-import gameController from "../controller/gameController.js";
+import GameController from "../controller/gameController.js";
 
 export const gameRoutes = [
   //Creating new game
   {
     path: "/",
     method: "post",
-    handler: gameController.createGame
+    controller: GameController,
+    handler: "createGame"
   },
   //Get player by game id
   {
     path: "/:gameId/player",
     method: "get",
-    handler: gameController.getPlayer
+    controller: GameController,
+    handler: "getPlayer"
   },
   //Deleting a game by id
   {
     path: "/:id",
     method: "delete",
-    handler: gameController.deleteGame
+    controller: GameController,
+    handler: "deleteGame"
   },
   //Get moves of game by id
   {
     path: "/:gameId/moves",
     method: "get",
-    handler: gameController.getMoves
+    controller: GameController,
+    handler: "getMoves"
   },
   //Get all games
   {
     path: "/",
     method: "get",
-    handler: gameController.getAllGames
+    controller: GameController,
+    handler: "getAllGames"
   },
   //Get game by id and player
   {
     path: "/:id/player/:guestId",
     method: "get",
-    handler: gameController.getGameAndPlayer
+    controller: GameController,
+    handler: "getGameAndPlayer"
   },
   //Join game by id 
   {
     path: "/:id/join",
     method: "post",
-    handler: gameController.joinGame
+    controller: GameController,
+    handler: "joinGame"
   },
   //Updating game by id
   {
     path: "/:id",
     method: "post",
-    handler: gameController.updateGame
+    controller: GameController,
+    handler: "updateGame"
   },
   //Create move of game
   {
     path: "/:gameId/moves",
     method: "post",
-    handler: gameController.createMove
+    controller: GameController,
+    handler: "createMove"
   },
 ]
 
@@ -62,7 +71,8 @@ export const guestRoutes = [
   {
     path: "/",
     method: "post",
-    handler: gameController.createGuest
+    controller: GameController,
+    handler: "createGuest"
   }
 
 ]

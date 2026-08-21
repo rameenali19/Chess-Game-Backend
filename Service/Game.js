@@ -24,7 +24,7 @@ export class Game {
         guest_id: guestId
       })
       .returning("*")
-    return (game[0]);
+    return (game[0].id);
   }
 
   //Creating guest

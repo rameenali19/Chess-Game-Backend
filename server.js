@@ -8,7 +8,7 @@ import express from "express"
 import { createServer } from "http";
 import { Server } from "socket.io"
 import { socketHandler } from "./socket/socketHandler.js";
-import { gameRoutes } from "./routes/routesConfig.js";
+import gameRoutes from "./routes/gameRoutes.js";
 import guestRoutes from "./routes/guestRoutes.js";
 
 //Returning server

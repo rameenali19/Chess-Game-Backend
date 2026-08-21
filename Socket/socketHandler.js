@@ -3,12 +3,12 @@ export function socketHandler(io) {
 
   io.on("connection", (socket) => {
 
-    //player joins the game
+    //Player joins the game
     socket.on("joinGame", async ({ gameId }) => {
 
-      gameId = String(gameId)   //converting to string
+      gameId = String(gameId)   //Converting to string
       socket.gameId = gameId
-      socket.join(gameId)    //joining the game
+      socket.join(gameId)    //Joining the game
 
       const room = io.sockets.adapter.rooms.get(gameId);
       const players = room ? room.size : 0;
@@ -31,13 +31,11 @@ export function socketHandler(io) {
 
     })
 
-    //----------------------------------------------------------------------
-
-    //recieving updated board and values 
+    //Recieving updated board and values 
     socket.on("gameUpdate", async ({ gameId, gameData }) => {
       gameId = String(gameId)
       socket.gameId = gameId
-      //updatig the database 
+      //Updatig the database 
       await Game.updateGame(
         gameData.turn,
         gameData.board,
@@ -49,17 +47,15 @@ export function socketHandler(io) {
         gameId
       );
 
-      //sending updated board and values 
+      //Sending updated board and values 
       socket.to(gameId).emit("gameUpdate", gameData)
     })
 
-    //------------------------------------------------------------------------
-
-    //creating moves
+    //Creating moves
     socket.on("createMove", async ({ gameId, moveData }) => {
       gameId = String(gameId)
       socket.gameId = gameId
-      //updatig the database 
+      //Updatig the database 
       await Game.createMove(
         moveData.pieceColor,
         moveData.pieceType,
@@ -70,16 +66,15 @@ export function socketHandler(io) {
       socket.to(gameId).emit("moveCreated", moveData);
     })
 
-    //------------------------------------------------------------------------
 
-    //player gets disconnected
+    //Player gets disconnected
     socket.on("leavingGame", async ({ gameId }) => {
       const id = socket.gameId
       if (!id) return
-      //leaving the game room
+      //Leaving the game room
       socket.leave(id)
 
-      //updating the gameState to waiting 
+      //Updating the gameState to waiting 
 
       const room = io.sockets.adapter.rooms.get(id);
       const players = room ? room.size : 0;
@@ -90,13 +85,11 @@ export function socketHandler(io) {
 
       if (players === 1) {
         await Game.updateGameStatus(id, "waiting")
-        //informing opponent about leaving
+        //Informing opponent about leaving
         socket.to(gameId).emit("opponentDisconnected")
       }
 
     })
-
-    //------------------------------------------------------------------------
 
   })
 }

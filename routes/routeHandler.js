@@ -1,10 +1,9 @@
 export function setupRoutes(router, routes) {
   routes.forEach((route) => {
+    const controller = new route.controller
     router[route.method](route.path, async (req, res, next) => {
       try {
-        const controller = route.controller
-        const handler = controller[route.handler]
-        const response = await handler.call(req);
+        const response = await controller[route.handler](req);
         res.json(response);
       } catch (error) {
         next(error);

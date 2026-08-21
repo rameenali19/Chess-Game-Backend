@@ -8,8 +8,8 @@ import express from "express"
 import { createServer } from "http";
 import { Server } from "socket.io"
 import { socketHandler } from "./socket/socketHandler.js";
-import gameRoutes from "./routes/gameRoutes.js";
-import guestRoutes from "./routes/guestRoutes.js";
+import { gameRoutes, guestRoutes } from "./routes/routesConfig.js";
+import { setupRoutes } from "./routes/routeHandler.js";
 
 //Returning server
 const app = express();
@@ -25,8 +25,14 @@ app.use(express.json());
 //Cors
 app.use(cors());
 
-app.use("/games", gameRoutes);
-app.use("/guests", guestRoutes);
+const gameRouter = express.Router();
+const guestRouter = express.Router();
+
+setupRoutes(gameRouter, gameRoutes);
+setupRoutes(guestRouter, guestRoutes);
+
+app.use("/games", gameRouter);
+app.use("/guests", guestRouter);
 
 //Global error handler
 app.use((err, req, res, next) => {

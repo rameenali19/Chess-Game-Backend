@@ -48,16 +48,16 @@ app.use(cors());
 // })
 
 //get moves of game by id
-app.get("/games/:gameId/moves", async (req, res) => {
-  const response = await gameController.getMoves(req);
-  res.json(response)
-})
+// app.get("/games/:gameId/moves", async (req, res) => {
+//   const response = await gameController.getMoves(req);
+//   res.json(response)
+// })
 
-//get all games
-app.get("/games", async (req, res) => {
-  const response = await gameController.getAllGames(req);
-  res.json(response)
-})
+// //get all games
+// app.get("/games", async (req, res) => {
+//   const response = await gameController.getAllGames(req);
+//   res.json(response)
+// })
 
 //get game by id and player
 app.get("/games/:id/player/:guestId", async (req, res) => {

@@ -18,5 +18,17 @@ export const gameRoutes = [
     path: "/:id",
     method: "delete",
     handler: gameController.deleteGame
-  }
+  },
+  //Get moves of game by id
+  {
+    path: "/:gameId/moves",
+    method: "get",
+    handler: gameController.getMoves
+  },
+  //Get all games
+  {
+    path: "/",
+    method: "get",
+    handler: gameController.getAllGames
+  },
 ]

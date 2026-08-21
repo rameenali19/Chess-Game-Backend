@@ -1,8 +1,7 @@
-import { stat } from "fs";
 import database from "../Knex.js";
 export class Game {
 
-  //creating a new game
+  //Creating a new game
   async createGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, mode, playerColor, guestId) {
 
     const game = await database("games")
@@ -28,7 +27,7 @@ export class Game {
     return (game[0]);
   }
 
-  //creating guest
+  //Creating guest
   async createGuest(guestId) {
 
     const guest = await database("guests")
@@ -39,7 +38,7 @@ export class Game {
     return ("Guest created");
   }
 
-  //deleting a game by ID
+  //Deleting a game by ID
   async deleteGame(id) {
 
     const game = await database("games")
@@ -70,7 +69,7 @@ export class Game {
     return move
   }
 
-  //get all games
+  //Get all games
   async getAllGames(guestId, page, limit, offset, status) {
 
     const query = database("games")
@@ -92,7 +91,7 @@ export class Game {
     return game
   }
 
-  //get game by id and player
+  //Get game by id and player
   async getGameAndPlayer(guestId, id) {
 
     const game = await database("games")
@@ -108,7 +107,7 @@ export class Game {
     return game
   }
 
-  //join game by id 
+  //Join game by id 
   async joinGame(id, guestId) {
 
     const gameExists = await database("games")
@@ -160,7 +159,7 @@ export class Game {
   }
 
 
-  //update game by id
+  //Update game by id
   async updateGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, winner, endReason, id) {
 
     const game = await database("games")
@@ -181,7 +180,7 @@ export class Game {
     }
   }
 
-  //creating move of game
+  //Creating move of game
   async createMove(pieceColor, pieceType, source, destination, gameId) {
 
     const game = await database("moves")
@@ -197,7 +196,7 @@ export class Game {
     }
   }
 
-  //get player by games ID
+  //Get player by games ID
   async getPlayer(guestId, gameId) {
 
     const player = await database("players")
@@ -209,7 +208,7 @@ export class Game {
     return player
   }
 
-  //update game status
+  //Update game status
   async updateGameStatus(gameId, status) {
     const game = await database("games")
       .where({
@@ -240,7 +239,7 @@ export class Game {
     return Number(totalGames.count)
   }
 
-  //get game by ID
+  //Get game by ID
   async getGame(id) {
     const game = await database("games")
       .where({

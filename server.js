@@ -28,24 +28,24 @@ app.use(cors());
 
 //API endpoints and handler functions calling the respective function from Game.js
 
-//creating a new game
-app.post("/games", async (req, res) => {
-  const response = await gameController.createGame(req);
-  res.json(response.id)
-})
+// //creating a new game
+// app.post("/games", async (req, res) => {
+//   const response = await gameController.createGame(req);
+//   res.json(response.id)
+// })
 
 
-//get player by game id
-app.get("/games/:gameId/player", async (req, res) => {
-  const response = await gameController.getPlayer(req);
-  res.json(response)
-})
+// //get player by game id
+// app.get("/games/:gameId/player", async (req, res) => {
+//   const response = await gameController.getPlayer(req);
+//   res.json(response)
+// })
 
 //deleting a game by id
-app.delete("/games/:id", async (req, res) => {
-  const response = await gameController.deleteGame(req);
-  res.json(response)
-})
+// app.delete("/games/:id", async (req, res) => {
+//   const response = await gameController.deleteGame(req);
+//   res.json(response)
+// })
 
 //get moves of game by id
 app.get("/games/:gameId/moves", async (req, res) => {

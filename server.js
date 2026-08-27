@@ -16,14 +16,16 @@ const app = express();
 const httpServer = createServer(app)
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
   }
 })
 
 //Converting the JSON text to  JavaScript object
 app.use(express.json());
 //Cors
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+}));
 
 const gameRouter = express.Router();
 const guestRouter = express.Router();
@@ -46,7 +48,8 @@ app.use((err, req, res, next) => {
 socketHandler(io)
 
 //Assigning port to the server
-httpServer.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+httpServer.listen(PORT, () => {
   console.log("Server is working!");
 })
 

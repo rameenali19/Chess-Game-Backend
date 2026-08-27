@@ -79,7 +79,11 @@ export class Game {
       .where({
         delete: false
       })
-    if (status) {
+
+    if (status === "unfinished") {
+      query.whereIn("game_status", ["waiting", "unfinished"])
+    }
+    else if (status) {
       query.where({
         game_status: status
       })
@@ -227,7 +231,10 @@ export class Game {
       .where({
         delete: false
       })
-    if (status) {
+    if (status === "unfinished") {
+      query.whereIn("game_status", ["waiting", "unfinished"])
+    }
+    else if (status) {
       query.where({
         game_status: status
       })

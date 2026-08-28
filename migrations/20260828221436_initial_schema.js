@@ -7,54 +7,54 @@ export async function up(knex) {
   // ---------- ENUMS ----------
 
   await knex.raw(`
-    CREATE TYPE game_status_enum AS ENUM (
-      'finished',
-      'unfinished',
-      'waiting'
-    )
-  `);
+CREATE TYPE game_status_enum AS ENUM (
+'finished',
+ 'unfinished',
+ 'waiting'
+)
+`);
 
   await knex.raw(`
-    CREATE TYPE game_mode_enum AS ENUM (
-      'singleplayer',
-      'multiplayer',
-      'ai'
-    )
-  `);
+CREATE TYPE game_mode_enum AS ENUM (
+'singleplayer',
+'multiplayer',
+'ai'
+)
+`);
 
   await knex.raw(`
-    CREATE TYPE winner_enum AS ENUM (
-      'white',
-      'black',
-      'draw'
-    )
-  `);
+CREATE TYPE winner_enum AS ENUM (
+'White',
+'Black',
+'Draw'
+)
+`);
 
   await knex.raw(`
-    CREATE TYPE end_reason_enum AS ENUM (
-      'checkmate',
-      'stalemate',
-      'resignation'
-    )
-  `);
+CREATE TYPE end_reason_enum AS ENUM (
+ 'checkmate',
+ 'stalemate',
+ 'resignation'
+)
+ `);
 
   await knex.raw(`
-    CREATE TYPE piece_type_enum AS ENUM (
-      'Pawn',
-      'King',
-      'Queen',
-      'Bishop',
-      'Knight',
-      'Rook'
-    )
-  `);
+CREATE TYPE piece_type_enum AS ENUM (
+ 'Pawn',
+ 'King',
+ 'Queen',
+ 'Bishop',
+ 'Knight',
+ 'Rook'
+)
+ `);
 
 
   // ---------- GAMES ----------
 
   await knex.schema.createTable("games", (table) => {
 
-   table.increments("id");
+    table.increments("id");
     table.text("current_turn");
 
     table.specificType("game_board", "text[]");
@@ -113,7 +113,7 @@ export async function up(knex) {
 
   await knex.schema.createTable("moves", (table) => {
 
-   table.increments("id");
+    table.increments("id");
 
     table.text("piece_color").notNullable();
 

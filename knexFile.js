@@ -1,4 +1,5 @@
 import dotenv from "dotenv"
+import { connect } from "http2";
 dotenv.config();
 
 export default {
@@ -11,6 +12,13 @@ export default {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME
     },
+    migrations: {
+      directory: "./migrations"
+    }
+  },
+  production: {
+    client: "pg",
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: "./migrations"
     }

@@ -35,6 +35,15 @@ export const up = (pgm) => {
     "resignation"
   ]);
 
+  pgm.createType("piece_type", [
+    "Pawn",
+    "King",
+    "Queen",
+    "Bishop",
+    "Knight",
+    "Rook"
+  ]);
+
 };
 
 /**

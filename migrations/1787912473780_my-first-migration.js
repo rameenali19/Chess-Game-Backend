@@ -153,6 +153,16 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
+  pgm.dropTable("moves");
+  pgm.dropTable("players");
+  pgm.dropTable("guests");
+  pgm.dropTable("games");
+
+  pgm.dropType("piece");
+  pgm.dropType("end_reason");
+  pgm.dropType("winner");
+  pgm.dropType("mode");
+  pgm.dropType("game_status");
 
 
 };

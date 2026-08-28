@@ -17,6 +17,14 @@ export const up = (pgm) => {
     "waiting"
   ]);
 
+  pgm.createType("mode", [
+    "single player",
+    "multiplayer",
+    "ai"
+  ]);
+
+
+
 };
 
 /**

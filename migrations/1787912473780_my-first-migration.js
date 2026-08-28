@@ -139,6 +139,7 @@ export const up = (pgm) => {
       type: "text"
     },
     game_id: {
+      type: "integer",
       notNull: true,
       references: "games(id)"
     }

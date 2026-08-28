@@ -24,9 +24,9 @@ export async function up(knex) {
 
   await knex.raw(`
     CREATE TYPE winner_enum AS ENUM (
-      'white',
-      'black',
-      'draw'
+      'White',
+      'Black',
+      'Draw'
     )
   `);
 

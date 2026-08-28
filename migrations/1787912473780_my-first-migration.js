@@ -85,12 +85,39 @@ export const up = (pgm) => {
     }
   });
 
+
   pgm.createTable("guests", {
     id: {
       type: "uuid",
       primaryKey: true
     }
   });
+
+
+  pgm.createTable("players", {
+    id: {
+      type: "integer",
+      primaryKey: true,
+      sequenceGenerated: {
+        precedence: "BY DEFAULT"
+      }
+    },
+    player_color: {
+      type: "text"
+    },
+    game_id: {
+      type: "integer",
+      references: "games(id)",
+      notNull: true
+    },
+    guest_id: {
+      type: "uuid",
+      references: "guests(id)",
+      notNull: true
+    }
+  });
+
+
 
 };
 

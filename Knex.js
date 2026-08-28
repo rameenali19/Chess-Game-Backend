@@ -2,13 +2,7 @@ import knex from "knex";
 import dotenv from "dotenv"
 
 dotenv.config();
-console.log("DB CONFIG:", {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  passwordExists: !!process.env.DB_PASSWORD
-});
+
 const database = knex({
   client: "pg",
   connection: {

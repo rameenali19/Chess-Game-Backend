@@ -23,7 +23,11 @@ export const up = (pgm) => {
     "ai"
   ]);
 
-
+  pgm.createType("winner", [
+    "White",
+    "Black",
+    "Draw"
+  ]);
 
 };
 

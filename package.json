@@ -20,6 +20,7 @@
     "socket.io": "^4.8.3"
   },
   "devDependencies": {
+    "node-pg-migrate": "^9.0.0",
     "nodemon": "^3.1.14"
   }
 }

@@ -117,7 +117,32 @@ export const up = (pgm) => {
     }
   });
 
-
+  pgm.createTable("moves", {
+    id: {
+      type: "integer",
+      primaryKey: true,
+      sequenceGenerated: {
+        precedence: "BY DEFAULT"
+      }
+    },
+    piece_color: {
+      type: "text",
+      notNull: true
+    },
+    piece_type: {
+      type: "piece"
+    },
+    source: {
+      type: "text"
+    },
+    destination: {
+      type: "text"
+    },
+    game_id: {
+      notNull: true,
+      references: "games(id)"
+    }
+  });
 
 };
 

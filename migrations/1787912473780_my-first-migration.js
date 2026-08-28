@@ -44,6 +44,54 @@ export const up = (pgm) => {
     "Rook"
   ]);
 
+  //Tables
+
+  pgm.createTable("games", {
+    id: {
+      type: "integer",
+      primaryKey: true,
+      sequenceGenerated: {
+        precedence: "BY DEFAULT"
+      }
+    },
+    current_turn: {
+      type: "text"
+    },
+    game_board: {
+      type: "text[]"
+    },
+    game_status: {
+      type: "game_status",
+      notNull: true
+    },
+    en_passant: {
+      type: "text"
+    },
+    promotion: {
+      type: "text"
+    },
+    mode: {
+      type: "mode"
+    },
+    delete: {
+      type: "boolean",
+      default: false
+    },
+    winner: {
+      type: "winner"
+    },
+    end_reason: {
+      type: "end_reason"
+    }
+  });
+
+  pgm.createTable("guests", {
+    id: {
+      type: "uuid",
+      primaryKey: true
+    }
+  });
+
 };
 
 /**

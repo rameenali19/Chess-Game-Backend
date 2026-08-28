@@ -29,6 +29,12 @@ export const up = (pgm) => {
     "Draw"
   ]);
 
+  pgm.createType("end_reason", [
+    "checkmate",
+    "stalemate",
+    "resignation"
+  ]);
+
 };
 
 /**

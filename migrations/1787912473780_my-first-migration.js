@@ -18,7 +18,7 @@ export const up = (pgm) => {
   ]);
 
   pgm.createType("mode", [
-    "single player",
+    "singleplayer",
     "multiplayer",
     "ai"
   ]);
@@ -35,7 +35,7 @@ export const up = (pgm) => {
     "resignation"
   ]);
 
-  pgm.createType("piece_type", [
+  pgm.createType("piece", [
     "Pawn",
     "King",
     "Queen",

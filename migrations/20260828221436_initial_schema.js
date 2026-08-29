@@ -4,7 +4,7 @@
  */
 export async function up(knex) {
 
-  // ---------- ENUMS ----------
+  // Enums
 
   await knex.raw(`
 CREATE TYPE game_status_enum AS ENUM (
@@ -50,7 +50,7 @@ CREATE TYPE piece_type_enum AS ENUM (
  `);
 
 
-  // ---------- GAMES ----------
+  //Tables
 
   await knex.schema.createTable("games", (table) => {
 
@@ -77,8 +77,6 @@ CREATE TYPE piece_type_enum AS ENUM (
   });
 
 
-  // ---------- GUESTS ----------
-
   await knex.schema.createTable("guests", (table) => {
 
     table
@@ -86,8 +84,6 @@ CREATE TYPE piece_type_enum AS ENUM (
       .primary();
   });
 
-
-  // ---------- PLAYERS ----------
 
   await knex.schema.createTable("players", (table) => {
 
@@ -108,8 +104,6 @@ CREATE TYPE piece_type_enum AS ENUM (
       .inTable("guests");
   });
 
-
-  // ---------- MOVES ----------
 
   await knex.schema.createTable("moves", (table) => {
 

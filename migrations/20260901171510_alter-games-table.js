@@ -3,7 +3,9 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-
+  await knex.schema.alterTable("games", (table) => {
+    table.integer("difficulty");
+  })
 };
 
 /**

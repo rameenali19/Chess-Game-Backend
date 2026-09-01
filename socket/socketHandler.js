@@ -19,7 +19,7 @@ export function socketHandler(io) {
         return
 
       if (players === 1) {
-        socket.emit("waitingScreen")
+        socket.emit("waitingModal")
         io.to(gameId).emit("opponentDisconnected")
       }
       if (players === 2) {

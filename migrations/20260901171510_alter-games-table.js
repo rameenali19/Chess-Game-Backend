@@ -13,5 +13,7 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-
+  await knex.schema.alterTable("games", (table) => {
+    table.dropColumn("difficulty");
+  })
 };

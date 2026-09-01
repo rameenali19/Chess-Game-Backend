@@ -1,4 +1,4 @@
-import database from "../Knex.js";
+import database from "../database.js";
 export class Game {
 
   //Creating a new game

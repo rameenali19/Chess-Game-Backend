@@ -12,7 +12,7 @@ export class Game {
         en_passant: enPassant,
         promotion: promotion,
         mode: mode,
-        difficulty: difficulty
+        difficulty: Number(difficulty)
 
       })
       .returning("*")

@@ -2,7 +2,7 @@ import database from "../database.js";
 export class Game {
 
   //Creating a new game
-  async createGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, mode, playerColor, guestId) {
+  async createGame(currentTurn, gameBoard, gameStatus, enPassant, promotion, mode, difficulty, playerColor, guestId) {
 
     const game = await database("games")
       .insert({
@@ -11,7 +11,8 @@ export class Game {
         game_status: gameStatus,
         en_passant: enPassant,
         promotion: promotion,
-        mode: mode
+        mode: mode,
+        difficulty: difficulty
 
       })
       .returning("*")

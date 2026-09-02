@@ -3,7 +3,7 @@ import Game from "../service/Game.js";
 class GameController {
   async createGame(req) {
     const {
-      currentTurn, gameBoard, gameStatus, enPassant, promotion, mode, playerColor, guestId
+      currentTurn, gameBoard, gameStatus, enPassant, promotion, mode, difficulty, playerColor, guestId
     } = req.body
     const result = await Game.createGame(
       currentTurn,
@@ -12,6 +12,7 @@ class GameController {
       enPassant,
       promotion,
       mode,
+      difficulty,
       playerColor,
       guestId
     )

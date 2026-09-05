@@ -108,6 +108,8 @@ class GameController {
   async getAllFinishedGames(req) {
     const { guestId } = req.params
     const result = await Game.getAllFinishedGames(guestId)
+
+    return (result)
   }
 }
 export default GameController

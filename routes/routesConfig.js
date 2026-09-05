@@ -66,7 +66,7 @@ export const gameRoutes = [
   },
   //Get all finished games
   {
-    path: "/:gameId/finished",
+    path: "/:guestId/finished",
     method: "get",
     controller: GameController,
     handler: "getAllFinishedGames"

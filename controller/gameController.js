@@ -104,7 +104,7 @@ class GameController {
     return (result)
   }
 
-  //Get all finished games
+  //Get all finished games by guestId
   async getAllFinishedGames(req) {
     const { guestId } = req.params
     const result = await Game.getAllFinishedGames(guestId)

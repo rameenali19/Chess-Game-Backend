@@ -257,5 +257,20 @@ export class Game {
 
     return (game)
   }
+
+  //Get all finished games by guestId
+  async getAllFinishedGames(guestId) {
+    const game = await database("games")
+      .join("players", "games.id", "players.game_id")
+      .where("players.guest_id", guestId)
+      .where({
+        delete: false,
+        game_status: "finished"
+      })
+      .select("games.*", "players.player_color")
+      .orderBy("games.id", "desc");
+
+    return (game)
+  }
 }
 export default new Game();

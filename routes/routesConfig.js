@@ -64,7 +64,7 @@ export const gameRoutes = [
     controller: GameController,
     handler: "createMove"
   },
-  //Get all finished games
+  //Get all finished games by guestId
   {
     path: "/:guestId/finished",
     method: "get",
